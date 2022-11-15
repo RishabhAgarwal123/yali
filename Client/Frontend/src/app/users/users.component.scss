@@ -1,0 +1,81 @@
+#usersWrapper {
+  background-color: lightgray;
+  height: auto;
+}
+
+#addAndSearch {
+  border-radius: 10px;
+  height: 40px;
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+
+  #addUser {
+    width: 20%;
+    align-items: center;
+    button {
+      height: 30px;
+      background-color: lightgray;
+      border-radius: 10px;
+      padding: 5px;
+      cursor: pointer;
+    }
+  }
+}
+
+#wrapper {
+  margin-top: 10px;
+  width: auto;
+  padding: 10px;
+  border-radius: 10px;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.user {
+  background-color: #ffffff;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 10px;
+  border-radius: 10px;
+  height: 160px;
+  width: 379px;
+  box-sizing: border-box;
+
+  .icon {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    border: 1px solid #000000;
+    margin-right: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .initials {
+      width: auto;
+      font-weight: 700;
+      font-size: 2rem;
+    }
+  }
+
+  p {
+    width: 60%;
+    span {
+      font-weight: 700;
+    }
+  }
+
+  .read-more {
+    font-size: 12px;
+    font-style: italic;
+    text-align: right;
+    margin: 0;
+    cursor: pointer;
+  }
+}
