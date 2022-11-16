@@ -15,11 +15,23 @@ export class UsersComponent implements OnInit {
   @ViewChild('searchValue') searchText!: ElementRef
 
   ngOnInit(): void {
-    this.users = this.userService.users
-    this.users.map((user: any) => {
+    this.fetchUsers()
+  }
+
+  fetchUsers() {
+    this.userService.getUsers().subscribe(({
+      next: (res: any) => {
+        this.users = res
+        this.userService.setStoredUsers(res)
+        this.updateInitials()
+      }
+    }))
+  }
+
+  updateInitials() {
+    this.users?.map((user: any) => {
       user['initials'] = user.first_name[0] + user.last_name[0]
     })
-    console.log(this.users)
   }
 
   openUser(user: any) {
@@ -32,15 +44,14 @@ export class UsersComponent implements OnInit {
 
   onSearch() {
     const value = this.searchText.nativeElement.value
-    if (value)
-      this.users = this.users.filter((user: any) => {
-        return user?.first_name === value || user?.last_name === value || user?.email === value
+    if (value) {
+      this.userService.searchUser(value).subscribe({
+        next: (res: any) => {
+          this.users = [res]
+          this.updateInitials()
+        },
+        error: (error: any) => console.log(error)
       })
-    else
-      this.users = this.userService.users
-    if (this.users.length === 0) this.errorMessage = "No user found"
-    console.log(this.users)
-    console.log(value)
+    } else this.users = this.userService.userSubject
   }
-
 }

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from '../services/user.service';
 
 @Component({
@@ -9,33 +9,37 @@ import { UserService } from '../services/user.service';
   styleUrls: ['./user.component.scss']
 })
 export class UserComponent implements OnInit {
+  userInitial: string = ''
   userId: any
   users: any
   user: any
+  formSubmitted: boolean = false
+  update: boolean = false
   pageHeader: any = 'User Profile'
 
-  constructor(private route: ActivatedRoute, private userService: UserService) { }
+  constructor(private route: ActivatedRoute, private userService: UserService, private router: Router) { }
 
   userForm: FormGroup = new FormGroup({
-    first_name: new FormControl('', [Validators.minLength(1), Validators.maxLength(15)]),
-    last_name: new FormControl('', [Validators.minLength(1), Validators.maxLength(15)]),
-    gender: new FormControl('', [Validators.required]),
-    email: new FormControl(''),
-    language: new FormControl(''),
-    preferred_color: new FormControl(''),
-    job_title: new FormControl(''),
-    department: new FormControl(''),
-    company_name: new FormControl(''),
+    first_name: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(15)]),
+    last_name: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(15)]),
+    gender: new FormControl('', Validators.required),
+    email: new FormControl('', [Validators.required, Validators.email]),
+    language: new FormControl('', [Validators.required]),
+    preferred_color: new FormControl('', Validators.required),
+    job_title: new FormControl('', Validators.required),
+    department: new FormControl('', Validators.required),
+    company_name: new FormControl('', Validators.required),
   })
 
   ngOnInit(): void {
-    this.users = this.userService.users
+    this.users = this.userService.userSubject
     this.route.params.subscribe((params: any) => {
       this.userId = params['id']
     })
 
     if (this.userId != 0) {
-      this.user = this.users.find((user: any) => user.id == this.userId)
+      this.user = this.users?.find((user: any) => user.id == this.userId)
+      this.userInitial = this.user.first_name[0] + this.user.last_name[0]
       this.setDefaultValue()
       this.pageHeader = 'Update User'
     } else this.pageHeader = 'Create User'
@@ -53,12 +57,63 @@ export class UserComponent implements OnInit {
       department: this.user.department,
       company_name: this.user.company_name
     }
-
+    this.update = true
     this.userForm.setValue(defaultUserValue)
   }
 
-  handleUser() {
-    console.log(this.userForm.value)
+  get first_name() {
+    return this.userForm.get('first_name')
   }
 
+  get last_name() {
+    return this.userForm.get('last_name')
+  }
+
+  get language() {
+    return this.userForm.get('language')
+  }
+
+  get gender() {
+    return this.userForm.get('gnder')
+  }
+
+  get preferred_color() {
+    return this.userForm.get('preferred_color')
+  }
+
+  get department() {
+    return this.userForm.get('department')
+  }
+
+  get job_title() {
+    return this.userForm.get('job_title')
+  }
+
+  get company_name() {
+    return this.userForm.get('company_name')
+  }
+
+  handleUser() {
+    this.formSubmitted = true
+    this.userForm.value['id'] = parseInt(this.userId)
+    if (!this.userForm.invalid) {
+      const user = this.userForm.value
+      if (!this.update)
+        this.userService.createUser(user).subscribe({
+          next: (res: any) => this.router.navigate(['/users'])
+        })
+      else this.userService.updateUser(this.userId, user).subscribe({
+        next: (res: any) => this.router.navigate(['/users']),
+        error: (error: any) => console.log(error)
+      })
+    }
+  }
+
+  backHome() {
+    this.router.navigate(['/users'])
+  }
+
+  onDestroy() {
+    this.update = false
+  }
 }

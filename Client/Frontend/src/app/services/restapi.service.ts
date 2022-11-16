@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http'
+import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -7,21 +9,23 @@ import { HttpClient } from '@angular/common/http'
 export class RestapiService {
 
   constructor(private http: HttpClient) { }
-  url: any = ""
+  url: any = environment.baseUrl
 
-  getUsers() {
-    return this.http.get(this.url)
+  getUsers(): Observable<any> {
+    return this.http.get<any>(this.url)
   }
 
-  searchUser(userId: any) {
-
+  searchUser(searchText: any) {
+    let url = `${this.url}/${searchText}`
+    return this.http.get<any>(url)
   }
 
-  createUser(user: any) {
-
+  createUser(user: any): Observable<any> {
+    return this.http.post<any>(this.url, { user })
   }
 
-  updateUser(user: any) {
-
+  updateUser(id: any, user: any): Observable<any> {
+    let url = `${this.url}/${id}`
+    return this.http.patch<any>(url, user)
   }
 }

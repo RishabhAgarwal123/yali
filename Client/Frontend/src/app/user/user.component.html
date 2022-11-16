@@ -3,39 +3,100 @@
     <h1>{{ pageHeader }}</h1>
     <p
       [ngStyle]="{
-        backgroundColor: user?.preferred_color ? user.preferred_color : 'black'
+        backgroundColor: user?.preferred_color
+          ? user.preferred_color
+          : 'lightgray'
       }"
     >
-      <span>Hi</span>
+      <span>{{ userInitial }}</span>
     </p>
   </div>
   <div id="image">
     <p
       [ngStyle]="{
-        backgroundColor: user?.preferred_color ? user.preferred_color : 'black'
+        backgroundColor: user?.preferred_color
+          ? user.preferred_color
+          : 'lightgray'
       }"
-    ></p>
+    >
+      <span>{{ userInitial }}</span>
+    </p>
   </div>
   <div id="form">
     <form [formGroup]="userForm" class="userProfile" (ngSubmit)="handleUser()">
       <div class="formControl">
         <label for="first_name">Firstname </label>
-        <input type="text" formControlName="first_name" value="first_name" />
+        <input
+          type="text"
+          formControlName="first_name"
+          value="first_name"
+          placeholder="Firstname..."
+        />
+        <div
+          *ngIf="
+            first_name?.invalid && (first_name?.dirty || first_name?.touched)
+          "
+        >
+          <div *ngIf="first_name?.errors?.['required']" class="error">
+            Firstname is required
+          </div>
+          <div *ngIf="first_name?.errors?.['minlength']" class="error">
+            Firstname must have atleast 3 characters
+          </div>
+          <div *ngIf="first_name?.errors?.['maxlength']" class="error">
+            Firstname must have at most 15 characters
+          </div>
+        </div>
       </div>
 
       <div class="formControl">
         <label for="last_name">Lastname </label>
-        <input type="text" formControlName="last_name" value="last_name" />
+        <input
+          type="text"
+          formControlName="last_name"
+          value="last_name"
+          placeholder="Lastname..."
+        />
+        <div
+          *ngIf="last_name?.invalid && (last_name?.dirty || last_name?.touched)"
+        >
+          <div *ngIf="last_name?.errors?.['required']" class="error">
+            Lastname is required
+          </div>
+          <div *ngIf="last_name?.errors?.['minlength']" class="error">
+            Lastname must have atleast 3 characters
+          </div>
+          <div *ngIf="last_name?.errors?.['maxlength']" class="error">
+            Lastname must have at most 15 characters
+          </div>
+        </div>
       </div>
 
       <div class="formControl">
         <label for="email">Email</label>
-        <input type="email" formControlName="email" value="email" />
+        <input
+          type="email"
+          formControlName="email"
+          value="email"
+          placeholder="Email..."
+        />
       </div>
 
       <div class="formControl">
         <label for="language">Language</label>
-        <input type="text" formControlName="language" value="language" />
+        <input
+          type="text"
+          formControlName="language"
+          value="language"
+          placeholder="Language..."
+        />
+        <div
+          *ngIf="language?.invalid && (language?.dirty || language?.touched)"
+        >
+          <div *ngIf="language?.errors?.['required']" class="error">
+            Language is required
+          </div>
+        </div>
       </div>
 
       <div class="formControl">
@@ -44,7 +105,18 @@
           type="text"
           formControlName="preferred_color"
           value="preferred_color"
+          placeholder="Preferred Color..."
         />
+        <div
+          *ngIf="
+            preferred_color?.invalid &&
+            (preferred_color?.dirty || preferred_color?.touched)
+          "
+        >
+          <div *ngIf="preferred_color?.errors?.['required']" class="error">
+            Preferred Color is required
+          </div>
+        </div>
       </div>
 
       <div class="formControl">
@@ -53,16 +125,47 @@
           <option value="male">Male</option>
           <option value="female">Female</option>
         </select>
+        <div *ngIf="gender?.invalid && (gender?.dirty || gender?.touched)">
+          <div *ngIf="gender?.errors?.['required']" class="error">
+            Gender is required
+          </div>
+        </div>
       </div>
 
       <div class="formControl">
         <label for="job_title">Job Title</label>
-        <input type="text" value="job_title" formControlName="job_title" />
+        <input
+          type="text"
+          value="job_title"
+          formControlName="job_title"
+          placeholder="Job Title..."
+        />
+        <div
+          *ngIf="job_title?.invalid && (job_title?.dirty || job_title?.touched)"
+        >
+          <div *ngIf="job_title?.errors?.['required']" class="error">
+            Job Title is required
+          </div>
+        </div>
       </div>
 
       <div class="formControl">
         <label for="department">Department</label>
-        <input type="text" value="department" formControlName="department" />
+        <input
+          type="text"
+          value="department"
+          formControlName="department"
+          placeholder="Department..."
+        />
+        <div
+          *ngIf="
+            department?.invalid && (department?.dirty || department?.touched)
+          "
+        >
+          <div *ngIf="department?.errors?.['required']" class="error">
+            Department is required
+          </div>
+        </div>
       </div>
 
       <div class="formControl">
@@ -71,12 +174,23 @@
           type="text"
           value="company_name"
           formControlName="company_name"
+          placeholder="Company Name..."
         />
+        <div
+          *ngIf="
+            company_name?.invalid &&
+            (company_name?.dirty || company_name?.touched)
+          "
+        >
+          <div *ngIf="company_name?.errors?.['required']" class="error">
+            Company Name is required
+          </div>
+        </div>
       </div>
 
       <div class="btn">
         <button type="submit" [disabled]="!userForm.valid">Save Changes</button>
-        <button>Back To Home</button>
+        <button (click)="backHome()">Back To Home</button>
       </div>
     </form>
   </div>

@@ -2,13 +2,12 @@ const express = require('express')
 const User = require('../models/users')
 const router = new express.Router()
 
-router.get("/", () => console.log("users"))
-
 // Create user
 router.post("/users", async (req, res) => {
-    const user = new User(req.body)
-
     try {
+        const users = User.find({})
+        req.body.user.id = (await users).length + 1
+        const user = new User(req.body.user)
         await user.save()
         res.status(201).send(user);
     } catch (error) {
@@ -28,11 +27,12 @@ router.get("/users", async (req, res) => {
 
 // Update users
 router.patch("/users/:id", async (req, res) => {
-    const _id = req.params.id
+    const id = req.params.id
     const body = req.body
-
+    const updates = Object.keys(body)
     try {
-        const user = await User.findById(_id)
+        const user = await User.findOne({id: id})
+        updates.forEach((update) => user[update] = body[update])
         await user.save()
 
         if (!user) return res.status(404).send()
@@ -43,8 +43,20 @@ router.patch("/users/:id", async (req, res) => {
 })
 
 // Search user
-router.get("/users", async (req, res) => {
-
+router.get("/users/:searchText", async (req, res) => {
+    const searchValue = req.params.searchText
+    try {
+        const user = await User.findOne({
+            $or: [
+                { first_name: searchValue },
+                { last_name: searchValue },
+                { email: searchValue }
+            ]
+        })
+        res.send(user)
+    } catch (error) {
+        res.send('No User Found')
+    }
 })
 
 module.exports = router

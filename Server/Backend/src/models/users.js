@@ -3,6 +3,10 @@ const validator = require('validator')
 
 // Creating schema
 const userSchema = new mongoose.Schema({
+    id: {
+        type: Number,
+        unique: true
+    },
     first_name: {
         type: String,
         required: true,
@@ -18,9 +22,6 @@ const userSchema = new mongoose.Schema({
         required: true,
         unique: true,
         lowercase: true,
-        validate(value) {
-            if (!validator.isEmail(value)) throw new Error("Invalid Email")
-        }
     },
     job_title: {
         type: String,

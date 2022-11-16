@@ -5,5 +5,5 @@ const databaseName = 'yali'
 
 MongoClient.connect(connectionURL, { useNewUrlParser: true }, (error, client) => {
     if (error) return console.log("Unable to connect to DB")
-    const db = client.db(databaseName)
+    client.db(databaseName)
 })
