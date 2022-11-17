@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { emailValidator } from '../email-validator.directive';
 import { UserService } from '../services/user.service';
 
 @Component({
@@ -23,7 +24,7 @@ export class UserComponent implements OnInit {
     first_name: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(15)]),
     last_name: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(15)]),
     gender: new FormControl('', Validators.required),
-    email: new FormControl('', [Validators.required, Validators.email]),
+    email: new FormControl('', [Validators.required, emailValidator()]),
     language: new FormControl('', [Validators.required]),
     preferred_color: new FormControl('', Validators.required),
     job_title: new FormControl('', Validators.required),
@@ -67,6 +68,10 @@ export class UserComponent implements OnInit {
 
   get last_name() {
     return this.userForm.get('last_name')
+  }
+
+  get email() {
+    return this.userForm.get('email')
   }
 
   get language() {

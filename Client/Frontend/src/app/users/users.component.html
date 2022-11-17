@@ -9,7 +9,7 @@
     </div>
   </div>
   <div id="wrapper">
-    <ng-container *ngFor="let user of users">
+    <ng-container *ngFor="let user of usersToDisplay">
       <div id="users">
         <div class="user">
           <div class="icon" [style.backgroundColor]="user.preferred_color">
@@ -30,5 +30,14 @@
         </div>
       </div>
     </ng-container>
+  </div>
+  <div>
+    <app-pagination
+      [current]="currentPage"
+      [total]="total"
+      (goTo)="onGoTo($event)"
+      (next)="onNext($event)"
+      (previous)="onPrevious($event)"
+    ></app-pagination>
   </div>
 </div>

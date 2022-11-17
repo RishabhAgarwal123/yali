@@ -1,0 +1,28 @@
+<div>
+  <nav>
+    <ul>
+      <li>
+        <button [disabled]="current === 1" (click)="onPrevious()">
+          Previous
+        </button>
+      </li>
+      <li *ngFor="let page of pages; index as i">
+        <a
+          *ngIf="page !== -1; else more"
+          tabindex="0"
+          [class.current]="page === current"
+          (click)="onGoTo(page)"
+          (keyup.enter)="onGoTo(page)"
+        >
+          {{ page }}
+        </a>
+        <ng-template #more>
+          <a class="more"> ...</a>
+        </ng-template>
+      </li>
+      <li>
+        <button [disabled]="current === total" (click)="onNext()">Next</button>
+      </li>
+    </ul>
+  </nav>
+</div>

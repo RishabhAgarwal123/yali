@@ -9,7 +9,10 @@ import { UserService } from '../services/user.service';
 })
 export class UsersComponent implements OnInit {
   users: any
-  errorMessage: any
+  usersToDisplay: any = []
+  userPerPage: any = 16
+  currentPage: Number = 1
+  total: any
   constructor(private userService: UserService, private router: Router) { }
 
   @ViewChild('searchValue') searchText!: ElementRef
@@ -22,10 +25,31 @@ export class UsersComponent implements OnInit {
     this.userService.getUsers().subscribe(({
       next: (res: any) => {
         this.users = res
+        this.usersToDisplay = this.paginate(this.currentPage, this.userPerPage)
+        this.total = this.calculateTotal()
         this.userService.setStoredUsers(res)
         this.updateInitials()
       }
     }))
+  }
+
+  paginate(current: any, perPage: any) {
+    return [...this.users.slice((current - 1) * perPage).slice(0, perPage)]
+  }
+
+  onGoTo(page: any) {
+    this.currentPage = parseInt(page)
+    this.usersToDisplay = this.paginate(this.currentPage, this.userPerPage)
+  }
+
+  onNext(page: any) {
+    this.currentPage = parseInt(page) + 1
+    this.usersToDisplay = this.paginate(this.currentPage, this.userPerPage)
+  }
+
+  onPrevious(page: any) {
+    this.currentPage = parseInt(page) - 1;
+    this.usersToDisplay = this.paginate(this.currentPage, this.userPerPage)
   }
 
   updateInitials() {
@@ -47,11 +71,24 @@ export class UsersComponent implements OnInit {
     if (value) {
       this.userService.searchUser(value).subscribe({
         next: (res: any) => {
-          this.users = [res]
+          if (res) {
+            this.users = [res]
+            this.usersToDisplay = this.paginate(this.currentPage, this.userPerPage)
+            this.total = this.calculateTotal()
+          }
+          else this.router.navigate(["/notfound"])
           this.updateInitials()
         },
         error: (error: any) => console.log(error)
       })
-    } else this.users = this.userService.userSubject
+    } else {
+      this.usersToDisplay = this.paginate(this.currentPage, this.userPerPage)
+      this.users = this.userService.userSubject
+      this.total = this.calculateTotal()
+    }
+  }
+
+  calculateTotal() {
+    return Math.ceil(this.users?.length / this.userPerPage)
   }
 }
