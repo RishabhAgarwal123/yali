@@ -1,7 +1,19 @@
-<div id="usersWrapper">
+<div id="usersWrapper" *ngIf="usersToDisplay.length > 0; else error">
   <div id="addAndSearch">
     <div id="addUser">
       <button (click)="addUser()">Create User</button>
+    </div>
+    <div>
+      <div>
+        <input type="radio" value="asc" name="asc" #asc />Ascending
+        <input type="radio" value="dsc" name="asc" #dsc />Descendng
+      </div>
+      <select name="" id="" #sortField>
+        <option value="first_name">first_name</option>
+        <option value="last_name">last_name</option>
+        <option value="email">email</option>
+      </select>
+      <button (click)="sort()">Sort</button>
     </div>
     <div id="searchUser">
       <input type="text" #searchValue placeholder="Search..." />
@@ -25,6 +37,8 @@
             <span>{{ user.department }}</span
             ><br />
             <span>{{ user.company_name }}</span>
+            <br />
+            <span>{{ user.email }}</span>
           </p>
           <span class="read-more" (click)="openUser(user)">More Info</span>
         </div>
@@ -41,3 +55,6 @@
     ></app-pagination>
   </div>
 </div>
+<ng-template #error>
+  <p>Something went wrong!</p>
+</ng-template>

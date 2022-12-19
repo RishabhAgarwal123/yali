@@ -28,4 +28,10 @@ export class RestapiService {
     let url = `${this.url}/${id}`
     return this.http.patch<any>(url, user)
   }
+
+  sortUsers(value: any, direction: any) {
+    let url = `${this.url}/sort/${value}/${direction}`
+    console.log(url)
+    return this.http.get(url)
+  }
 }

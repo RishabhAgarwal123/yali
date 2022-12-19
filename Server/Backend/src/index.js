@@ -11,4 +11,3 @@ app.use(cors())
 app.use(userRouter)
 
 app.listen(PORT, () => console.log(`Server is running at ${PORT}`))
-

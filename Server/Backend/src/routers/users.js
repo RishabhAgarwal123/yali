@@ -42,6 +42,32 @@ router.patch("/users/:id", async (req, res) => {
     }
 })
 
+router.get("/users/sort", async (req, res) => {
+    try {
+        console.log("Hitted")
+        const users = await User.find({})
+        const sortedusers = users.sort((user1, user2) => user1.last_name > user2.last_name ? 1 : -1)
+        console.log(sortedusers)
+        res.send(sortedusers)
+    } catch (e) {
+        res.send(e)
+    }
+})
+
+router.get("/users/sort/:value/:sortDir", async (req, res) => {
+    const sortValue = req.params.value
+    const direction = req.params.sortDir
+    console.log(sortValue)
+    let sorted = []
+    try {
+        const users = await User.find({})
+        sorted = users.sort((user1, user2) => user1[sortValue] < user2[sortValue] ? direction === 'asc' ? 1 : -1 : direction === 'asc' ? -1 : 1)
+        res.send(sorted)
+    } catch (e) {
+        res.send(e)
+    }
+})
+
 // Search user
 router.get("/users/:searchText", async (req, res) => {
     const searchValue = req.params.searchText

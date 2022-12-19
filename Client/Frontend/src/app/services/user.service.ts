@@ -30,6 +30,10 @@ export class UserService {
     this.userSubject = users
   }
 
+  getSortedUsers(value: any, direction: any) {
+    return this.restApiService.sortUsers(value, direction)
+  }
+
   getStoredUsers() {
     this.userSubject
   }

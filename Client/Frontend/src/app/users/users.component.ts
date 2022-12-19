@@ -10,12 +10,15 @@ import { UserService } from '../services/user.service';
 export class UsersComponent implements OnInit {
   users: any
   usersToDisplay: any = []
-  userPerPage: any = 16
+  userPerPage: any = 8
   currentPage: Number = 1
   total: any
   constructor(private userService: UserService, private router: Router) { }
 
   @ViewChild('searchValue') searchText!: ElementRef
+  @ViewChild('sortField') sortField!: ElementRef
+  @ViewChild('asc') asc!: ElementRef
+  @ViewChild('dsc') dsc!: ElementRef
 
   ngOnInit(): void {
     this.fetchUsers()
@@ -24,7 +27,7 @@ export class UsersComponent implements OnInit {
   fetchUsers() {
     this.userService.getUsers().subscribe(({
       next: (res: any) => {
-        this.users = res
+        if (res) this.users = res
         this.usersToDisplay = this.paginate(this.currentPage, this.userPerPage)
         this.total = this.calculateTotal()
         this.userService.setStoredUsers(res)
@@ -86,6 +89,20 @@ export class UsersComponent implements OnInit {
       this.users = this.userService.userSubject
       this.total = this.calculateTotal()
     }
+  }
+
+  sort() {
+    const sortValue = this.sortField.nativeElement.value
+    const sortDir = this.asc.nativeElement.value ? 'asc' : 'dsc'
+    this.userService.getSortedUsers(sortValue, sortDir).subscribe({
+      next: (res) => {
+        if (res) {
+          this.users = res
+          this.usersToDisplay = this.paginate(this.currentPage, this.userPerPage)
+          this.updateInitials()
+        }
+      }, error: (error) => console.log(error)
+    })
   }
 
   calculateTotal() {
