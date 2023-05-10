@@ -1,0 +1,109 @@
+div {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin-top: 1rem;
+}
+
+div nav {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+div ul {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+div ul li {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  margin: 0 4px;
+}
+
+div ul li a {
+  display: -ms-grid;
+  display: grid;
+  justify-items: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  width: 100%;
+  cursor: pointer;
+  width: 38px;
+  line-height: 38px;
+  border-radius: 5px;
+  text-align: center;
+  font-size: 1.2rem;
+}
+
+div ul li a.current,
+div ul li a:not(.more):hover {
+  background-color: gray;
+  color: #ffffff;
+  font-weight: 700;
+}
+
+div ul li a.more:hover,
+div ul li a.current {
+  cursor: default;
+  text-decoration: none;
+}
+
+div ul li button {
+  background-color: gray;
+  border: none;
+  cursor: pointer;
+  display: -ms-grid;
+  display: grid;
+  place-items: center;
+  font-size: 1.2rem;
+  border-radius: 5px;
+  color: #ffffff;
+  padding: 8px 16px;
+}
+
+div ul li button[disabled] {
+  cursor: default;
+  background-color: lightgray;
+}
+
+div ul li button:not([disabled]):hover {
+  background-color: gray;
+  color: #ffffff;
+  cursor: pointer;
+  outline: none;
+}
+/*# sourceMappingURL=pagination.component.css.map */

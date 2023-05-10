@@ -1,0 +1,187 @@
+#usersWrapper {
+  height: auto;
+}
+
+#addAndSearch {
+  border-radius: 10px;
+  height: 40px;
+  padding: 10px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  gap: 10px;
+}
+
+#addAndSearch #addUser {
+  width: 20%;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+#addAndSearch #addUser button {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  height: 30px;
+  background-color: lightgray;
+  border-radius: 10px;
+  padding: 10px;
+  cursor: pointer;
+  font-size: 17px;
+}
+
+#addAndSearch #addUser button:hover {
+  background-color: gray;
+}
+
+#addAndSearch #searchUser {
+  height: 30px;
+  margin-right: 15px;
+}
+
+#addAndSearch #searchUser input {
+  padding: 10px;
+  font-size: 17px;
+  border: 1px solid grey;
+  float: left;
+  width: 60%;
+  background: #f1f1f1;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+
+#addAndSearch #searchUser button {
+  float: left;
+  width: auto;
+  padding: 10px;
+  background-color: lightgray;
+  font-size: 17px;
+  border: 1px solid grey;
+  border-left: none;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  cursor: pointer;
+}
+
+#addAndSearch #searchUser button:hover {
+  background-color: gray;
+}
+
+#wrapper {
+  margin-top: 10px;
+  width: auto;
+  padding: 10px;
+  border-radius: 10px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  gap: 10px;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+}
+
+.user {
+  background-color: #ffffff;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  padding: 10px;
+  border-radius: 10px;
+  height: 160px;
+  width: 379px;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  -webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+          box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.user .icon {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  border: 1px solid #000000;
+  margin-right: 10px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.user .icon .initials {
+  width: auto;
+  font-weight: 700;
+  font-size: 2rem;
+}
+
+.user p {
+  width: 60%;
+}
+
+.user p span {
+  font-weight: 700;
+}
+
+.user .read-more {
+  font-size: 12px;
+  font-style: italic;
+  text-align: right;
+  margin: 0;
+  cursor: pointer;
+}
+
+@media only screen and (max-width: 420px) {
+  #wrapper {
+    margin-top: 30px;
+  }
+  #addAndSearch {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    margin-bottom: 10px;
+  }
+  #addAndSearch #addUser {
+    width: 100%;
+  }
+  #addAndSearch #addUser button {
+    width: 98%;
+  }
+  #addAndSearch #searchUser {
+    width: 100%;
+    margin-right: 0;
+  }
+  #addAndSearch #searchUser button {
+    width: 32%;
+  }
+}
+/*# sourceMappingURL=users.component.css.map */
